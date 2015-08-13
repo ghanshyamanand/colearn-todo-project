@@ -1,5 +1,9 @@
 class TodosController < ApplicationController
   def index
-    @todo = "Milk"
+    # here we have only one todo
+    # @todo_item1 = "Milk"
+
+    # now we will have array of todos
+    @todo_array = ['Milk','Butter','Tea','Coffee']
   end
 end
