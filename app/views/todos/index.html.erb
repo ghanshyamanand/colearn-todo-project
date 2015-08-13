@@ -1,8 +1,45 @@
-<h1>Shared Todo App</h1>
-<b>Total number of Todo  : <%=@todo_array.length%></b>
-<ul>
-  <% @todo_array.each do |todo_item| %>
-    <li><%=todo_item.name %></li>
-  <% end %>
-</ul>
-
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      <% if !flash[:error].nil? %>
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert" >×</button>
+          <strong><%= flash[:error] %></strong>
+        </div>
+      <% end %>
+      <% if flash[:success] %>
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert" >×</button>
+          <strong><%= flash[:success] %></strong>
+        </div>
+      <% end %>
+      <h1>Shared Todo App</h1>
+      <hr>
+      <b>Total number of Todo  : <%=@todo_array.length%></b>
+      <div class="well">
+        <%= form_tag("/todos/complete/", :method => "post") do %>
+          <ul style="list-style-type:none;">
+            <% @todo_array.each do |t| %>
+              <% if t.completed == true %>
+                <li  style="color:grey;"> <%= check_box_tag "todos_checkbox[]",t.id, false, disabled: true %> <strike><%= t.todo_item %></strike> </li>
+              <% else %>
+                <li><%= check_box_tag  "todos_checkbox[]",t.id %><%= t.todo_item %></li>
+              <% end %>
+            <%end%>
+          </ul>
+          <%= submit_tag("Complete Todos", :class=>"btn btn-success") %>
+        <%end %>
+      </div> <!-- well -->
+      <%#= form_tag("/todos/add", :method=>"post") do %>
+        <%#= text_field_tag(:todo_text) %>
+        <!-- <br> -->
+        <%#= submit_tag("Add todo", :class=>"btn") %>
+      <%# end %>
+      <%= form_for @new_todo, :url => { :action => "add" }  do |f|  %>
+        <%= f.text_field  :todo_item %>
+        <%= f.submit "Add todo", class: "btn btn-primary" %>
+      <%end%>
+    </div> <!-- span6 -->
+  </div> <!-- row -->
+  <%= link_to "Delete last todo" , todos_delete_path %>
+</div> <!-- container -->

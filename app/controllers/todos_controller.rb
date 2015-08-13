@@ -6,8 +6,44 @@ class TodosController < ApplicationController
     # now we will have array of todos
     # @todo_array = ['Milk','Butter','Tea','Coffee']
 
-    # now we will fetch from db
-    @todo_array = Todo.all
+    # now we will fetch from data base
+    @todo_array = Todo.fetch_all_records
+    @new_todo = Todo.new
+    # Read http://apidock.com/rails/ActionController/Base/render
+    # render :nothing => true
+    # render :index
+    #render :action => "index", :layout => "ghanshyam"
 
+    # this will not execute the method , it will only render the view
+    #render :action => "delete"
+
+    # this will execute the method first and then go to view
+    #redirect_to :action => 'deleted'
   end
+
+  def add
+    # this will not execute because it will not execute the method so instalce variable wont be present in view and it will show error
+    # render :index
+    #@todo = Todo.create(todo_item:params[:todo_text])
+    @todo = Todo.create(todo_item: params[:todo][:todo_item])
+    unless @todo.valid?
+      flash[:error] = @todo.errors.full_messages.join("<br>").html_safe
+    else
+      flash[:success] = ("Todo added successfully ").html_safe
+   end
+   redirect_to :action => 'index'
+  end
+
+  def complete
+    todos = Todo.find(params["todos_checkbox"])
+    Todo.update_checkbox(todos)
+    redirect_to :action => 'index'
+  end
+
+  def delete
+    Todo.last.destroy if Todo.last.present?
+    flash[:success] = ("Last todo deleted successfully").html_safe
+    redirect_to :action => 'index'
+  end
+
 end

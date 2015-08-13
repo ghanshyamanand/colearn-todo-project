@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813095927) do
+ActiveRecord::Schema.define(version: 20150813112956) do
 
   create_table "todos", force: :cascade do |t|
     t.string   "todo_item"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "completed"
   end
 
 end
