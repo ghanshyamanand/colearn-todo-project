@@ -35,14 +35,23 @@ class TodosController < ApplicationController
   end
 
   def complete
-    todos = Todo.find(params["todos_checkbox"])
-    Todo.update_checkbox(todos)
+    if params["todos_checkbox"].nil?
+      flash[:error] = ("No todo item selected").html_safe
+    else
+      todos = Todo.find(params["todos_checkbox"])
+      Todo.update_checkbox(todos)
+    end
     redirect_to :action => 'index'
   end
 
   def delete
     Todo.last.destroy if Todo.last.present?
     flash[:success] = ("Last todo deleted successfully").html_safe
+    redirect_to :action => 'index'
+  end
+
+  def not_complete
+    Todo.not_completed(params[:todo_item])
     redirect_to :action => 'index'
   end
 

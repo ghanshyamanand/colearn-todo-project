@@ -24,4 +24,9 @@ class Todo < ActiveRecord::Base
   def update_checkbox
     self.update(completed: true)
   end
+
+  def self.not_completed todo
+    find(todo).update(completed:false)
+  end
+
 end

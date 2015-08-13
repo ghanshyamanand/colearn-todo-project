@@ -1,0 +1,12 @@
+<%= form_tag("/todos/complete/", :method => "post") do %>
+  <ul style="list-style-type:none;">
+    <% @todo_array.each do |t| %>
+      <% if t.completed == true %>
+        <li  style="color:grey;"><%= check_box_tag "todos_checkbox[]",t.id, false, disabled: true %> <strike><%= t.todo_item %></strike>&nbsp&nbsp&nbsp&nbsp<%= link_to "Not completed" , todos_not_complete_path(todo_item:t) %></li>
+      <% else %>
+        <li><%= check_box_tag  "todos_checkbox[]",t.id %><%= t.todo_item %></li>
+      <% end %>
+    <%end%>
+  </ul>
+  <%= submit_tag("Complete Todos", :class=>"btn btn-success")  if @todo_array.present? %>
+<%end %>
