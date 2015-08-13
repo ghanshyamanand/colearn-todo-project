@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'todos/index'
+
   get 'pages/home'
   get 'pages/about'
 
