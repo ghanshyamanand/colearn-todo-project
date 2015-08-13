@@ -1,12 +1,22 @@
 <%= form_tag("/todos/complete/", :method => "post") do %>
-  <ul style="list-style-type:none;">
+  <table class="table">
+    <thead>
+      <th>Completed</th>
+      <th>Todo</th>
+      <th>Delete</th>
+      <th>Not Completed</th>
+    </thead>
+    <tbody>
     <% @todo_array.each do |t| %>
-      <% if t.completed == true %>
-        <li  style="color:grey;"><%= check_box_tag "todos_checkbox[]",t.id, false, disabled: true %> <strike><%= t.todo_item %></strike>&nbsp&nbsp&nbsp&nbsp<%= link_to "Not completed" , todos_not_complete_path(todo_item:t) %></li>
-      <% else %>
-        <li><%= check_box_tag  "todos_checkbox[]",t.id %><%= t.todo_item %></li>
-      <% end %>
+      <tr>
+        <% if t.completed == true %>
+          <td><%= check_box_tag "todos_checkbox[]",t.id, false, disabled: true %></td><td><strike><%= t.todo_item %></strike></td><td><%= link_to "Delete" , todos_not_complete_path(todo_item:t) %></td><td><%= link_to "Not completed" , todos_not_complete_path(todo_item:t) %></td>
+        <% else %>
+          <td><%= check_box_tag  "todos_checkbox[]",t.id %></td><td><%= t.todo_item %></td><td><%= link_to "Delete" , todos_not_complete_path(todo_item:t) %></td><td><%= link_to_if(false,"Not completed" , todos_not_complete_path(todo_item:t)) %></td>
+        <% end %>
+      </tr>
     <%end%>
-  </ul>
-  <%= submit_tag("Complete Todos", :class=>"btn btn-success")  if @todo_array.present? %>
+    <tr><td colspan="4"><%= submit_tag("Complete Todos", :class=>"btn btn-success")  if @todo_array.present? %></td></tr>
+    </tbody>
+  </table>
 <%end %>

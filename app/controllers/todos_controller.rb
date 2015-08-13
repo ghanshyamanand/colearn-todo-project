@@ -1,25 +1,30 @@
 class TodosController < ApplicationController
-  def index
-    # here we have only one todo
-    # @todo_item1 = "Milk"
 
-    # now we will have array of todos
-    # @todo_array = ['Milk','Butter','Tea','Coffee']
+  before_action :common_functions
 
-    # now we will fetch from data base
-    @todo_array = Todo.fetch_all_records
-    @new_todo = Todo.new
-    # Read http://apidock.com/rails/ActionController/Base/render
-    # render :nothing => true
-    # render :index
-    #render :action => "index", :layout => "ghanshyam"
 
-    # this will not execute the method , it will only render the view
-    #render :action => "delete"
 
-    # this will execute the method first and then go to view
-    #redirect_to :action => 'deleted'
-  end
+  # def index
+  #   # here we have only one todo
+  #   # @todo_item1 = "Milk"
+
+  #   # now we will have array of todos
+  #   # @todo_array = ['Milk','Butter','Tea','Coffee']
+
+  #   # now we will fetch from data base
+  #   # @todo_array = Todo.fetch_all_records
+  #   # @new_todo = Todo.new
+  #   # Read http://apidock.com/rails/ActionController/Base/render
+  #   # render :nothing => true
+  #   # render :index
+  #   #render :action => "index", :layout => "ghanshyam"
+
+  #   # this will not execute the method , it will only render the view
+  #   #render :action => "delete"
+
+  #   # this will execute the method first and then go to view
+  #   #redirect_to :action => 'deleted'
+  # end
 
   def add
     # this will not execute because it will not execute the method so instalce variable wont be present in view and it will show error
@@ -44,15 +49,16 @@ class TodosController < ApplicationController
     redirect_to :action => 'index'
   end
 
-  def delete
-    Todo.last.destroy if Todo.last.present?
-    flash[:success] = ("Last todo deleted successfully").html_safe
-    redirect_to :action => 'index'
-  end
-
   def not_complete
     Todo.not_completed(params[:todo_item])
     redirect_to :action => 'index'
   end
+
+  private
+
+    def common_functions
+      @todo_array = Todo.fetch_all_records
+      @new_todo = Todo.new
+    end
 
 end
