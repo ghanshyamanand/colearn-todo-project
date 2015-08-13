@@ -8,11 +8,11 @@
 #  updated_at :datetime         not null
 #  completed  :boolean
 #
-
 class Todo < ActiveRecord::Base
   validates :todo_item, presence: true
+
   def self.fetch_all_records
-    self.all
+    all
   end
 
   def self.update_checkbox todos
@@ -22,11 +22,10 @@ class Todo < ActiveRecord::Base
   end
 
   def update_checkbox
-    self.update(completed: true)
+    update(completed: true)
   end
 
   def self.not_completed todo
     find(todo).update(completed:false)
   end
-
 end
