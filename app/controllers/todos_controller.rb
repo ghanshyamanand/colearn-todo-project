@@ -54,6 +54,12 @@ class TodosController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  def destroy
+    Todo.delete_item params[:todo_item]
+    flash[:success] = ("Todo deleted successfully ").html_safe
+    redirect_to :action => 'index'
+  end
+
   private
 
     def common_functions

@@ -15,6 +15,10 @@ class Todo < ActiveRecord::Base
     all
   end
 
+  def self.delete_item todo
+    find(todo).destroy
+  end
+
   def self.update_checkbox todos
     todos.each do |todo_item|
       todo_item.update_checkbox

@@ -10,9 +10,9 @@
     <% @todo_array.each do |t| %>
       <tr>
         <% if t.completed == true %>
-          <td><%= check_box_tag "todos_checkbox[]",t.id, false, disabled: true %></td><td><strike><%= t.todo_item %></strike></td><td><%= link_to "Delete" , todos_not_complete_path(todo_item:t) %></td><td><%= link_to "Not completed" , todos_not_complete_path(todo_item:t) %></td>
+          <td><%= check_box_tag "todos_checkbox[]",t.id, false, disabled: true %></td><td><strike><%= t.todo_item %></strike></td><td><%= link_to "Delete" , todos_delete_path(todo_item:t), method: :delete %></td><td><%= link_to "Not completed" , todos_not_complete_path(todo_item:t) %></td>
         <% else %>
-          <td><%= check_box_tag  "todos_checkbox[]",t.id %></td><td><%= t.todo_item %></td><td><%= link_to "Delete" , todos_not_complete_path(todo_item:t) %></td><td><%= link_to_if(false,"Not completed" , todos_not_complete_path(todo_item:t)) %></td>
+          <td><%= check_box_tag  "todos_checkbox[]",t.id %></td><td><%= t.todo_item %></td><td><%= link_to "Delete" , todos_delete_path(todo_item:t), method: :delete %></td><td><%= link_to_if(false,"Not completed" , todos_not_complete_path(todo_item:t)) %></td>
         <% end %>
       </tr>
     <%end%>
